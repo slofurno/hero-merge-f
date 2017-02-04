@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+  body,html {
+    background-color: skyblue;
+  }
+  html {
+      box-sizing: border-box;
+  }
+  *, *:before, *:after {
+      box-sizing: inherit;
+  }
+  label {
+    width: 100%;
+    display: block;
+  }
+	.modal-appear {
+    transform: translate(0, 100%);
+  }
+  .modal-appear.modal-appear-active {
+    transform: translate(0, 0%);
+    transition: transform 500ms ease-in-out;
+  }
+</style>
+</head>
+<body>
+  <div id="root"></div>
+  <script src="/bundle.js"></script>
+</body>
+</html>
