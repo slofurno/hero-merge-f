@@ -11,10 +11,17 @@ import { fetchHeroes } from 'modules/heroes'
 
 const x = (state = "HELLO", action) => state
 const store = createStore(rootReducer, applyMiddleware(thunk))
+store.subscribe(() => console.log(store.getState()))
+
+
 store.dispatch(fetchHeroes())
 
 import App from './containers/app'
 import HeroList from './herolist'
+
+import CreateHeroContainer from 'containers/createhero'
+import MergeHeroContainer from 'containers/mergehero'
+
 
 class Root extends Component {
   render() {
@@ -23,7 +30,8 @@ class Root extends Component {
       <Provider store={store}>
         <Router history={history}>
           <Route path="/" component={App}>
-            <IndexRoute component={HeroList}/>
+            <Route path="/create" component={CreateHeroContainer}/>
+            <Route path="/merge" component={MergeHeroContainer}/>
           </Route>
         </Router>
       </Provider>

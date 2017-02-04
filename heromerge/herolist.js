@@ -6,15 +6,20 @@ import Hero from './hero'
 
 class HeroList extends Component {
   render() {
-    const { heroes } = this.props
-      console.log(heroes)
+    const { heroes, selectedHeroes, heroClicked } = this.props
 
     return (
-      <ul className="hero-list">
-        { heroes.map((x,i) => <li key={i}><Hero hero={x}/> </li>) }
-      </ul>
+      <div>
+        { heroes.map((hero,i) =>
+            <Hero
+              hero={hero}
+              onClick={() => heroClicked(hero.id)}
+              selected={selectedHeroes.includes(hero.id)}
+              key={i}/>) }
+      </div>
     )
   }
 }
 
-export default connect(x => x, {})(HeroList)
+export default HeroList
+//export default connect(x => x, {})(HeroList)
