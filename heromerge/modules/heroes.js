@@ -17,6 +17,18 @@ export function fetchHeroesSuccess(heroes) {
   }
 }
 
+export function mergedHeroCreated(hero, sources) {
+  return (dispatch) => {
+    fetch('/api/heroes/merge', {
+      method: 'POST',
+      body: JSON.stringify({
+        hero,
+        from: sources
+      }),
+    })
+  }
+}
+
 function heroes(state = [], action) {
 	switch(action.type) {
 	case FETCH_HEROES_SUCCESS:
