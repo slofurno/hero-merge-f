@@ -23,7 +23,20 @@ class Merge extends Component {
 
   submit() {
     this.props.onSubmit({
-      hero_name: this.refs.hero_name.value
+      hero_name: this.refs.hero_name.value,
+      real_name: this.refs.hero_name.value,
+      attributes: {
+        strength: this.refs.strength.value|0,
+        speed: this.refs.speed.value|0,
+        power: this.refs.power.value|0,
+        intelligence: this.refs.intelligence.value|0,
+        durability: this.refs.durability.value|0,
+        combat: this.refs.combat.value|0
+      },
+      powers: this.props.sources.reduce((a,c) => a.concat(c.powers), [])
+        .reduce((a,c) => this.state.removedPowers.includes(c) ? a : a.concat(c), []),
+      weaknesses: this.props.sources.reduce((a,c) => a.concat(c.weaknesses), []),
+      gender: this.refs.gender.value
     }, this.props.sources.map(x => x.id))
   }
 
@@ -35,9 +48,9 @@ class Merge extends Component {
 
     return (
       <div>
-        <input ref="hero_name" type="text"/><br/>
-        <input ref="real_name" type="text"/><br/>
-        <input ref="gender" type="text"/><br/>
+        <label>hero name: <input ref="hero_name" type="text"/></label><br/>
+        <label>real name: <input ref="real_name" type="text"/></label><br/>
+        <label>gender: <input ref="gender" type="text"/></label><br/>
         <label>strength<input ref="strength" type="number" min="0" max="100"/></label><br/>
         <label>speed<input ref="speed" type="number" min="0" max="100"/></label><br/>
         <label>power<input ref="power" type="number" min="0" max="100"/></label><br/>
