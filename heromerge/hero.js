@@ -1,33 +1,88 @@
 import React, { Component, PropTypes } from 'react'
 
 const style = {
-  width: 400,
-  padding: 20,
+  maxWidth: 600,
+  padding: 15,
   background: 'gainsboro',
   borderRadius: 4,
-  marginBottom: 20
+  marginBottom: 15
 }
+
+const halfStyle = {
+  display: 'inline-block',
+  width: '50%'
+}
+
+const powers = [
+  'intelligence',
+  'strength',
+  'speed',
+  'durability',
+  'power',
+  'combat'
+]
+
+const colors = {
+  intelligence: 'deepskyblue',
+  strength: 'crimson',
+  speed: 'gold',
+  durability: 'gray',
+  power: 'limegreen',
+  combat: 'darkorange'
+}
+
+const noMargin = {
+  margin: 0
+}
+
+const blockStyle = { background: 'lightgray', margin: '2px 0', padding: 2, width: '100%' }
+
+const up = '\u25b2'
+const down = '\u25bc'
+
+const AttributeGraph = ({attributes}) => (
+  <div>
+  { powers.map((power,i) =>
+      <div key={i}
+        style={{
+          borderRadius: 3,
+          padding: 3,
+          color: 'white',
+          width: attributes[power]+'%',
+          background: colors[power]
+        }}>
+      {power}
+      </div>)
+  }
+  </div>
+)
 
 class Hero extends Component {
   render() {
     const { hero, selected, onClick } = this.props
     return (
       <div style={style} onClick={onClick}>
-        <h3>{`${hero.hero_name} (${hero.real_name})`}</h3>
-        <span>{`gender: ${hero.gender}`}</span>
-        <h4>attributes</h4>
-        <ul>
-          { Object.keys(hero.attributes)
-            .map((attr,i) => <li key={i}> { `${attr}: ${hero.attributes[attr]}` } </li>) }
-        </ul>
-        <h4>powers</h4>
-        <ul>
-          { hero.powers.map((power,i) => <li key={i}> {power} </li>) }
-        </ul>
-        <h4>weaknesses</h4>
-        <ul>
-          { hero.weaknesses.map((weakness,i) => <li key={i}> {weakness} </li>) }
-        </ul>
+        <h3 style={noMargin}>{`${hero.hero_name} (${hero.real_name})`}</h3>
+        <span>{hero.gender}</span>
+        <div className="flex-directed">
+
+          <div style={{display: 'flex', margin: '0 4px 0 0', flex: 1, flexDirection: 'column'}}>
+            <div style={blockStyle}>
+              <AttributeGraph attributes={hero.attributes}/>
+            </div>
+          </div>
+
+          <div style={{display: 'flex', margin: '0 4px 0 0', flex: 1.2, flexDirection: 'column'}}>
+            <div style={blockStyle}>
+            { hero.powers.map((power,i) => <div key={i}>{`${up} ${power}`} </div>)}
+            </div>
+            <div style={blockStyle}>
+            {hero.weaknesses.map((weakness,i) => <div key={i+hero.powers.length}> {`${down} ${weakness}`} </div>)}
+
+            </div>
+          </div>
+
+        </div>
       </div>
     )
   }

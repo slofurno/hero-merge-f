@@ -48,15 +48,15 @@ class Merge extends Component {
 
     return (
       <div>
-        <label>hero name: <input ref="hero_name" type="text"/></label><br/>
-        <label>real name: <input ref="real_name" type="text"/></label><br/>
-        <label>gender: <input ref="gender" type="text"/></label><br/>
-        <label>strength<input ref="strength" type="number" min="0" max="100"/></label><br/>
-        <label>speed<input ref="speed" type="number" min="0" max="100"/></label><br/>
-        <label>power<input ref="power" type="number" min="0" max="100"/></label><br/>
-        <label>intelligence<input ref="intelligence" type="number" min="0" max="100"/></label><br/>
-        <label>durability<input ref="durability" type="number" min="0" max="100"/></label><br/>
-        <label>combat<input ref="combat" type="number" min="0" max="100"/></label><br/>
+        <label>hero name: <input ref="hero_name" type="text"/></label>
+        <label>real name: <input ref="real_name" type="text"/></label>
+        <label>gender: <input ref="gender" type="text"/></label>
+        <label>strength<input ref="strength" type="number" min="0" max="100"/></label>
+        <label>speed<input ref="speed" type="number" min="0" max="100"/></label>
+        <label>power<input ref="power" type="number" min="0" max="100"/></label>
+        <label>intelligence<input ref="intelligence" type="number" min="0" max="100"/></label>
+        <label>durability<input ref="durability" type="number" min="0" max="100"/></label>
+        <label>combat<input ref="combat" type="number" min="0" max="100"/></label>
 
         <div>
         { powers.map((power,i) =>
