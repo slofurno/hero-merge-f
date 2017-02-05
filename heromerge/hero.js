@@ -1,4 +1,5 @@
 import React, { Component, PropTypes } from 'react'
+import AttributeGraph from 'components/attributegraph'
 
 const style = {
   maxWidth: 600,
@@ -13,24 +14,6 @@ const halfStyle = {
   width: '50%'
 }
 
-const powers = [
-  'intelligence',
-  'strength',
-  'speed',
-  'durability',
-  'power',
-  'combat'
-]
-
-const colors = {
-  intelligence: 'deepskyblue',
-  strength: 'crimson',
-  speed: 'gold',
-  durability: 'gray',
-  power: 'limegreen',
-  combat: 'darkorange'
-}
-
 const noMargin = {
   margin: 0
 }
@@ -39,23 +22,6 @@ const blockStyle = { background: 'lightgray', margin: '2px 0', padding: 2, width
 
 const up = '\u25b2'
 const down = '\u25bc'
-
-const AttributeGraph = ({attributes}) => (
-  <div>
-  { powers.map((power,i) =>
-      <div key={i}
-        style={{
-          borderRadius: 3,
-          padding: 3,
-          color: 'white',
-          width: attributes[power]+'%',
-          background: colors[power]
-        }}>
-      {power}
-      </div>)
-  }
-  </div>
-)
 
 class Hero extends Component {
   render() {

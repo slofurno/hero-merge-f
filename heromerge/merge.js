@@ -1,16 +1,41 @@
 import React, { Component, PropTypes } from 'react'
+import AttributeGraph from 'components/attributegraph'
 
 import { toggle } from 'utils'
 
 const powerStyle = {
   width: '100%',
-  padding: 10,
+  padding: 2,
   background: 'linen'
 }
 
 const removedStyle = Object.assign({}, powerStyle, {
-  background: 'slategray'
+  background: 'white'
 })
+
+const attributes = [
+  'intelligence',
+  'strength',
+  'speed',
+  'durability',
+  'power',
+  'combat'
+]
+
+const empty = '\u2610'
+const check = '\u2611'
+
+const combineAttributes = sources => {
+  const combinedAttributes = {}
+  attributes.forEach(attr => combinedAttributes[attr] = 0)
+
+  sources.forEach(src =>
+    attributes.forEach(attr =>
+      combinedAttributes[attr] =
+        Math.max(combinedAttributes[attr], src.attributes[attr])))
+
+  return combinedAttributes
+}
 
 class Merge extends Component {
   constructor(props) {
@@ -22,19 +47,18 @@ class Merge extends Component {
   }
 
   submit() {
+    const powers = this.props.sources.reduce((a,c) => a.concat(c.powers), [])
+        .reduce((a,c) => this.state.removedPowers.includes(c) ? a : a.concat(c), [])
+
+    if (powers > 5 || powers < 1) {
+      return
+    }
+
     this.props.onSubmit({
       hero_name: this.refs.hero_name.value,
       real_name: this.refs.hero_name.value,
-      attributes: {
-        strength: this.refs.strength.value|0,
-        speed: this.refs.speed.value|0,
-        power: this.refs.power.value|0,
-        intelligence: this.refs.intelligence.value|0,
-        durability: this.refs.durability.value|0,
-        combat: this.refs.combat.value|0
-      },
-      powers: this.props.sources.reduce((a,c) => a.concat(c.powers), [])
-        .reduce((a,c) => this.state.removedPowers.includes(c) ? a : a.concat(c), []),
+      attributes: combineAttributes(this.props.sources),
+      powers,
       weaknesses: this.props.sources.reduce((a,c) => a.concat(c.weaknesses), []),
       gender: this.refs.gender.value
     }, this.props.sources.map(x => x.id))
@@ -45,18 +69,23 @@ class Merge extends Component {
     const { removedPowers } = this.state
 
     const powers = sources.reduce((a,c) => a.concat(c.powers), [])
+    const combinedAttributes = combineAttributes(sources)
 
     return (
       <div>
-        <label>hero name: <input ref="hero_name" type="text"/></label>
-        <label>real name: <input ref="real_name" type="text"/></label>
-        <label>gender: <input ref="gender" type="text"/></label>
-        <label>strength<input ref="strength" type="number" min="0" max="100"/></label>
-        <label>speed<input ref="speed" type="number" min="0" max="100"/></label>
-        <label>power<input ref="power" type="number" min="0" max="100"/></label>
-        <label>intelligence<input ref="intelligence" type="number" min="0" max="100"/></label>
-        <label>durability<input ref="durability" type="number" min="0" max="100"/></label>
-        <label>combat<input ref="combat" type="number" min="0" max="100"/></label>
+        <div>
+          {sources.map(x => x.hero_name).reduce((a,c) => `${a} and ${c}`)}
+        </div>
+        <div style={{display: 'flex', flexDirection: 'row', flex: 1}}>
+        <div>
+          <label>hero name: <input ref="hero_name" type="text"/></label>
+          <label>real name: <input ref="real_name" type="text"/></label>
+          <label>gender: <input ref="gender" type="text"/></label>
+        </div>
+        <div style={{width: '100%'}}>
+          <AttributeGraph attributes={combinedAttributes}/>
+        </div>
+        </div>
 
         <div>
         { powers.map((power,i) =>
@@ -65,7 +94,7 @@ class Merge extends Component {
               style={removedPowers.includes(power) ? removedStyle : powerStyle}
               onClick={() => this.setState({removedPowers: toggle(removedPowers, power)})}
             >
-            {power}
+            {`${removedPowers.includes(power) ? empty : check} ${power}`}
             </div>)}
         </div>
       <input type="button" value="merge" onClick={() => this.submit()}/>
