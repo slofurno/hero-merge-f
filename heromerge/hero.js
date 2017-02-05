@@ -2,7 +2,6 @@ import React, { Component, PropTypes } from 'react'
 import AttributeGraph from 'components/attributegraph'
 
 const style = {
-  maxWidth: 600,
   padding: 15,
   background: 'gainsboro',
   borderRadius: 4,

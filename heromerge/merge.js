@@ -70,11 +70,12 @@ class Merge extends Component {
 
     const powers = sources.reduce((a,c) => a.concat(c.powers), [])
     const combinedAttributes = combineAttributes(sources)
+    const heroNames = sources.map(x => x.hero_name).join(' and ')
 
     return (
       <div>
         <div>
-          {sources.map(x => x.hero_name).reduce((a,c) => `${a} and ${c}`)}
+          {heroNames}
         </div>
         <div style={{display: 'flex', flexDirection: 'row', flex: 1}}>
         <div>

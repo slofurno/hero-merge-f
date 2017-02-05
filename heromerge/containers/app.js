@@ -9,7 +9,7 @@ class App extends Component {
   render() {
     const { children, heroes, selectedHeroes, selectedHeroesChanged } = this.props
     return (
-      <div>
+      <div style={{width: 600, maxWidth: '100%', margin: '0 auto'}}>
         <div>
           <Link to={'/'}> heroes </Link>
           <Link to={'/create'}> create </Link>
