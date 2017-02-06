@@ -2,17 +2,18 @@ import React, { Component, PropTypes } from 'react'
 import { Link, browserHistory } from 'react-router'
 import { connect } from 'react-redux'
 
-import { heroCreated } from 'modules/heroes'
+import { heroSubmitted, setPowers, setWeaknesses } from 'modules/newhero'
 
 import Modal from 'modal'
-import EditHero from 'edithero'
+import EditHeroForm from 'editheroform'
+
 
 class CreateHeroContainer extends Component {
   render() {
-    const { heroCreated } = this.props
+    const { heroSubmitted, newhero, setPowers, setWeaknesses } = this.props
     return (
       <Modal>
-        <EditHero onCreate={heroCreated}/>
+        <EditHeroForm onSubmit={heroSubmitted} hero={newhero} setPowers={setPowers} setWeaknesses={setWeaknesses}/>
       </Modal>
     )
   }
@@ -22,4 +23,4 @@ function mapStateToProps(state, ownProps) {
   return state
 }
 
-export default connect(mapStateToProps, {heroCreated})(CreateHeroContainer)
+export default connect(mapStateToProps, {heroSubmitted, setPowers, setWeaknesses})(CreateHeroContainer)

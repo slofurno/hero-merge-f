@@ -1,7 +1,14 @@
 import { combineReducers } from 'redux'
-import { formValueSelector } from 'redux-form'
 
 export const FETCH_HEROES_SUCCESS = 'FETCH_HEROES_SUCCESS'
+export const HERO_CREATED_SUCCESS = 'HERO_CREATED_SUCCESS'
+
+export function heroCreatedSuccess(hero) {
+  return {
+    type: HERO_CREATED_SUCCESS,
+    hero
+  }
+}
 
 export function fetchHeroes() {
   return (dispatch) => {
@@ -30,17 +37,12 @@ export function mergedHeroCreated(hero, sources) {
   }
 }
 
-const heroSelector = formValueSelector('createHero')
-export function heroCreated() {
-  return (dispatch, getState) => {
-    console.log(heroSelector(getState(), 'hero_name', 'real_name'))
-  }
-}
-
 function heroes(state = [], action) {
 	switch(action.type) {
 	case FETCH_HEROES_SUCCESS:
 		return action.heroes
+  case HERO_CREATED_SUCCESS:
+    return state.concat(action.hero)
 	default:
 		return state
 	}
